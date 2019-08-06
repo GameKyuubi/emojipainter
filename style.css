@@ -1,3 +1,10 @@
 .emojiCanvas {
-  font-family: monospace;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
