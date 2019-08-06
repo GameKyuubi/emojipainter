@@ -11,29 +11,47 @@
   <br/>
   <script>
     const EMOJI_CANVAS_DIMENSIONS = {
-      width : 50,
-      height : 50
+      width : 80,
+      height : 30
     }
+
+    class EmojiBrush {
+      constructor() {
+        this._brushInt = 128515;
+      }
+
+      get brushInt() {
+        return this._brushInt;
+      }
+      get html() {
+        return '&#' + this.brushInt;
+      }
+      set brushInt(brushInt) {
+        this._brushInt = brushInt;
+      }
+    }
+
+    let brush = new EmojiBrush();
 
     class EmojiCanvas {
       constructor(width, height, canvasElement) {
         this.canvasElement = canvasElement;
-        let x = [];
-        for (let i=0; i<width; i++) {
-          x.push("&#x1F600");
+        let y = [];
+        for (let i=0; i<height; i++) {
+          y.push('&#128515');
         }
         this.matrix = [];
-        for (let i=0; i<height; i++) {
-          this.matrix.push(x.slice());
+        for (let i=0; i<width; i++) {
+          this.matrix.push(y.slice());
         }
         this.updateCanvasElement();
       }
 
       get width() {
-        return this.matrix[0].length;
+        return this.matrix.length;
       }
       get height() {
-        return this.matrix.length;
+        return this.matrix[0].length;
       }
       getCanvasElement() {
         return this.canvasElement;
@@ -64,8 +82,15 @@
 
     let handleMousemove = (event) => {
       let canvasElement = emojiCanvas.canvasElement;
-      emojiCanvas.setPixel('&#x1F976', Math.floor(event.x/11), Math.floor(event.y/15) - Math.floor(canvasElement.getBoundingClientRect().top/13));
+      emojiCanvas.setPixel(brush.html, Math.floor(event.x/13), Math.floor(event.y/15) - Math.floor(canvasElement.getBoundingClientRect().top/13));
     };
-
     document.addEventListener('mousemove', handleMousemove);
+
+    let handleMousewheel = (event) => {
+      brush.brushInt += event.deltaY;
+      return false;
+    }
+    let canvasElement = emojiCanvas.canvasElement;
+    canvasElement.addEventListener('wheel', handleMousewheel);
+
   </script>
