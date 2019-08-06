@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head> 
+<body>
+  <h1>Emoji Painter</h1>
+  <p>Draw an image using emoji</p>
+  <p class="emojiCanvas">lll&#x1F600&#x1F600&#x1F600&#x1F600<br/>&#x1F600&#x1F600&#x1F600&#x1F600&#x1F600
+  </p>
+  <br/>
+  <script>
+    const EMOJI_CANVAS_DIMENSIONS = {
+      width : 50,
+      height : 50
+    }
+
+    class EmojiCanvas {
+      constructor(width, height, canvasElement) {
+        this.canvasElement = canvasElement;
+        let x = [];
+        for (let i=0; i<width; i++) {
+          x.push("&#x1F600");
+        }
+        this.matrix = [];
+        for (let i=0; i<height; i++) {
+          this.matrix.push(x.slice());
+        }
+        this.updateCanvasElement();
+      }
+
+      get width() {
+        return this.matrix[0].length;
+      }
+      get height() {
+        return this.matrix.length;
+      }
+      getCanvasElement() {
+        return this.canvasElement;
+      }
+
+      /**
+      * @param {string, int, int} Hex code of emoji,
+      * x-y coordinates
+      */
+      setPixel(hexEmoji, x, y) {
+        this.matrix[x][y] = hexEmoji;
+        this.updateCanvasElement();
+      }
+
+      updateCanvasElement() {
+        let outputString = '';
+        for (let i=0; i<this.height; i++) {
+          for (let j=0; j<this.width; j++) {
+            outputString += this.matrix[j][i];
+          }
+          outputString += '<br/>'
+        }
+        this.canvasElement.innerHTML = outputString;
+      }
+    }
+
+    let emojiCanvas = new EmojiCanvas(EMOJI_CANVAS_DIMENSIONS.width, EMOJI_CANVAS_DIMENSIONS.height, document.getElementsByClassName("emojiCanvas")[0]);
+
+    let handleMousemove = (event) => {
+      let canvasElement = emojiCanvas.canvasElement;
+      emojiCanvas.setPixel('&#x1F976', Math.floor(event.x/11), Math.floor(event.y/15) - Math.floor(canvasElement.getBoundingClientRect().top/13));
+    };
+
+    document.addEventListener('mousemove', handleMousemove);
+  </script>
