@@ -6,15 +6,12 @@
 </head> 
 <body>
   <h1>Emoji Painter</h1>
-  <p>Draw an image using emoji</p>
+  <p>Draw an image using emoji<span class='brush'></span></p>
   <p class="emojiCanvas">EMPTY_CANVAS</p>
-  <br/>
   <script>
+    let emojiCanvasElement = document.getElementsByClassName("emojiCanvas")[0];
+    let brushCanvasElement = document.getElementsByClassName("brush")[0];
     let mouseButtonState = 0;
-    const EMOJI_CANVAS_DIMENSIONS = {
-      width : 80,
-      height : 30
-    }
 
     class EmojiBrush {
       constructor() {
@@ -33,16 +30,23 @@
     }
 
     let brush = new EmojiBrush();
+    brushCanvasElement.innerHTML = ' ' + brush.html;
 
     class EmojiCanvas {
-      constructor(width, height, canvasElement) {
+      constructor(canvasElement) {
         this.canvasElement = canvasElement;
+        this.matrix = [['&#128515']];
+        this.updateCanvasElement();
+        let _canvasElement = this.canvasElement;
+        let xRatio = Math.floor(_canvasElement.parentElement.clientWidth / _canvasElement.getBoundingClientRect().width);
+        let yRatio = Math.floor((_canvasElement.parentElement.clientHeight - _canvasElement.getBoundingClientRect().top) / _canvasElement.getBoundingClientRect().height);
+
         let y = [];
-        for (let i=0; i<height; i++) {
+        this.matrix = [];
+        for (let i=0; i<yRatio; i++) {
           y.push('&#128515');
         }
-        this.matrix = [];
-        for (let i=0; i<width; i++) {
+        for (let i=0; i<xRatio; i++) {
           this.matrix.push(y.slice());
         }
         this.updateCanvasElement();
@@ -79,7 +83,7 @@
       }
     }
 
-    let emojiCanvas = new EmojiCanvas(EMOJI_CANVAS_DIMENSIONS.width, EMOJI_CANVAS_DIMENSIONS.height, document.getElementsByClassName("emojiCanvas")[0]);
+    let emojiCanvas = new EmojiCanvas(emojiCanvasElement);
 
     let handleMousemove = (event) => {
       let canvasElement = emojiCanvas.canvasElement;
@@ -93,6 +97,7 @@
 
     let handleMousewheel = (event) => {
       brush.brushInt += event.deltaY;
+      brushCanvasElement.innerHTML = ' ' + brush.html;
       return false;
     }
     let canvasElement = emojiCanvas.canvasElement;
