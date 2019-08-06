@@ -85,12 +85,12 @@
 
     let emojiCanvas = new EmojiCanvas(emojiCanvasElement);
 
+    let xRatio = emojiCanvas.width / emojiCanvas.canvasElement.getBoundingClientRect().width;
+    let yRatio = emojiCanvas.height / emojiCanvas.canvasElement.getBoundingClientRect().height;
+
     let handleMousemove = (event) => {
-      let canvasElement = emojiCanvas.canvasElement;
-      let xRatio = emojiCanvas.width / canvasElement.getBoundingClientRect().width;
-      let yRatio = emojiCanvas.height / canvasElement.getBoundingClientRect().height;
       if (mouseButtonState % 2 == 1) {
-        emojiCanvas.setPixel(brush.html, Math.floor(event.x*xRatio - 0.5), Math.floor(event.y*yRatio - canvasElement.getBoundingClientRect().top*yRatio));
+        emojiCanvas.setPixel(brush.html, Math.floor(event.x*xRatio - 0.5), Math.floor(event.y*yRatio - emojiCanvas.canvasElement.getBoundingClientRect().top*yRatio));
       }
     };
     document.addEventListener('mousemove', handleMousemove);
@@ -105,6 +105,8 @@
 
     let handleMouseDown = (event) => {
       mouseButtonState = event.buttons;
+      let canvasElement = emojiCanvas.canvasElement;
+      emojiCanvas.setPixel(brush.html, Math.floor(event.x*xRatio - 0.5), Math.floor(event.y*yRatio - canvasElement.getBoundingClientRect().top*yRatio));
     }
     document.addEventListener('mousedown', handleMouseDown);
 
