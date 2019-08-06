@@ -1,4 +1,5 @@
 .emojiCanvas {
+  display: inline-block;
   font-family: 'Source Code Pro', monospace;
   font-size: 12px;
   -webkit-touch-callout: none;
