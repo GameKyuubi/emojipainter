@@ -18,3 +18,11 @@ html, body {
   -ms-user-select: none;
   user-select: none;
 }
+
+.canvas-unit {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  position: absolute;
+  display: hidden;
+  left: -999em;
+}

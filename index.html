@@ -33,6 +33,11 @@
 
     let handleMousewheel = (event) => {
       brush.brushInt += event.deltaY;
+      let count = 0;
+      while(count < 1000 && !emojiCanvas.unitElementHasSameDimensionsAs(brush.brushInt)) {
+        brush.brushInt += event.deltaY;
+        count++;
+      }
       brushCanvasElement.innerHTML = ' ' + brush.html;
       return false;
     }
