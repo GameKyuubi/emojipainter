@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
+  <script src="./modules/emojibrush.js" crossorigin="anonymous"></script>
   <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -14,23 +15,7 @@
     let brushCanvasElement = document.getElementsByClassName("brush")[0];
     let mouseButtonState = 0;
 
-    class EmojiBrush {
-      constructor() {
-        this._brushInt = 128515;
-      }
-
-      get brushInt() {
-        return this._brushInt;
-      }
-      get html() {
-        return '&#' + this.brushInt;
-      }
-      set brushInt(brushInt) {
-        this._brushInt = brushInt;
-      }
-    }
-
-    let brush = new EmojiBrush();
+    let brush = new EmojiBrush(128515);
     brushCanvasElement.innerHTML = ' ' + brush.html;
 
     class EmojiCanvas {
