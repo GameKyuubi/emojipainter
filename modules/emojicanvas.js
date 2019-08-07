@@ -66,6 +66,7 @@ class EmojiCanvas {
       && newBoundingRect.height == unitBoundingRect.height;
     newElement.style.display = 'none';
     this.unitElement.style.display = 'none';
+    this.canvasElement.removeChild(newElement);
     return result;
   }
 
