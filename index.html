@@ -32,11 +32,14 @@
     document.addEventListener('mousemove', handleMousemove);
 
     let handleMousewheel = (event) => {
-      brush.brushInt += event.deltaY;
+      brush.brushInt += event.deltaY/Math.abs(event.deltaY);
       let count = 0;
       while(count < 1000 && !emojiCanvas.unitElementHasSameDimensionsAs(brush.brushInt)) {
-        brush.brushInt += event.deltaY;
+        brush.brushInt += event.deltaY/Math.abs(event.deltaY);
         count++;
+        if(count == 999) {
+          console.warn("Brush overflow");
+        }
       }
       brushCanvasElement.innerHTML = ' ' + brush.html;
       return false;
