@@ -62,8 +62,8 @@ class EmojiCanvas {
     this.unitElement.style.display = 'inline-block';
     let newBoundingRect = newElement.getBoundingClientRect();
     let unitBoundingRect = this.unitElement.getBoundingClientRect();
-    let result = newBoundingRect.width == unitBoundingRect.width
-      && newBoundingRect.height == unitBoundingRect.height;
+    let result = Math.ceil(newBoundingRect.width) == Math.ceil(unitBoundingRect.width)
+      && Math.ceil(newBoundingRect.height) == Math.ceil(unitBoundingRect.height);
     newElement.style.display = 'none';
     this.unitElement.style.display = 'none';
     this.canvasElement.removeChild(newElement);
