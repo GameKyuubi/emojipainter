@@ -4,12 +4,16 @@
   <script src="./modules/emojibrush.js" crossorigin="anonymous"></script>
   <script src="./modules/emojicanvas.js" crossorigin="anonymous"></script>
   <script src="./twemoji.min.js" crossorigin="anonymous"></script>
+  <script src="./multi-spectral-picker.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./light.min.css">
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="style.css">
 </head> 
 <body>
   <h1>Emoji Painter</h1>
   <p>Draw an image using emoji<span class='brush'></span></p>
+  <input id="example" type="text">
   <p class="emojiCanvas">EMPTY_CANVAS</p>
   <script>
     let emojiCanvasElement = document.getElementsByClassName("emojiCanvas")[0];
@@ -52,11 +56,22 @@
       let canvasElement = emojiCanvas.canvasElement;
       emojiCanvas.setPixel(brush.html, Math.floor(event.x*xRatio - 0.5), Math.floor(event.y*yRatio - canvasElement.getBoundingClientRect().top*yRatio));
     }
-    document.addEventListener('mousedown', handleMouseDown);
+    //document.addEventListener('mousedown', handleMouseDown);
 
     let handleMouseUp = (event) => {
       mouseButtonState = event.buttons;
     }
     document.addEventListener('mouseup', handleMouseUp);
+
+    var colorPickerMultiSpectral = new ColorPicker.MultiSpectral('#example', {
+      format: 'rgb',
+      size: 'small',
+      inline: true,
+      arrow: true,
+      anchor: {
+        hidden: false,
+        cssProperty: 'color'
+      }
+    });
   </script>
 </body>
