@@ -58,5 +58,10 @@
       mouseButtonState = event.buttons;
     }
     document.addEventListener('mouseup', handleMouseUp);
+
+    let handleBrushClick = (event) => {
+      window.open('http://www.duckduckgo.com', "test");
+    }
+    brushCanvasElement.addEventListener('click', handleBrushClick);
   </script>
 </body>
