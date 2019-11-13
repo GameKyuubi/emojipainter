@@ -13,9 +13,13 @@
 <body>
   <h1>Emoji Painter</h1>
   <p>Draw an image using emoji<span class='brush'></span></p>
-  <input id="example" type="text">
+  <span id="example-anchor"></span>
+  <input id="example" type="text"></input>
   <p class="emojiCanvas">EMPTY_CANVAS</p>
   <script>
+    const CHAR_START = 128515
+    const COLOR_SAMPLES = 32;
+    const EMOJI_SAMPLES = 1000;
     let emojiCanvasElement = document.getElementsByClassName("emojiCanvas")[0];
     let brushCanvasElement = document.getElementsByClassName("brush")[0];
     let mouseButtonState = 0;
@@ -69,9 +73,33 @@
       inline: true,
       arrow: true,
       anchor: {
-        hidden: false,
+        hidden: true,
         cssProperty: 'color'
       }
     });
+
+    let loadPalette = () => {
+      charArray = [];
+      colorMap = new Map();
+      for(let i = 0; i<10000; i++) {
+        if(emojiCanvas.unitElementHasSameDimensionsAs(CHAR_START + i)) {
+          charArray.push(CHAR_START + i);
+        }
+      }
+      charArray.forEach((charInt) => {
+        // calculate character color
+        let canvas = document.createElement('canvas');
+        let context = canvas.getContext('2d');
+        context.font = '48px serif';
+        context.fillText(String.fromCharCode(charInt), 100, 100);
+        colorMap.set(charInt, 'color here');
+      });
+      return colorMap;
+    }
+    let getAverageColor = (character) => {
+      return color;
+    }
+
+    let map = loadPalette();
   </script>
 </body>
